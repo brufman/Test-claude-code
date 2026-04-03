@@ -50,5 +50,6 @@ plt.axvline(x=average_from_freq, color='r', linestyle='--', label=f'Observed Mea
 plt.axvline(x=14.7, color='g', linestyle='--', label=f'Target Expected = 14.7')
 plt.legend()
 
-plt.savefig('/home/user/Test-claude-code/frequency_distribution.png', dpi=150, bbox_inches='tight')
+plt.savefig('frequency_distribution.png', dpi=150, bbox_inches='tight')
+plt.show()
 print("\nChart saved to frequency_distribution.png")
