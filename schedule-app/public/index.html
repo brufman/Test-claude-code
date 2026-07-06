@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Request a time slot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <nav class="top"><a href="admin.html">Admin dashboard →</a></nav>
+    <h1>Request a time slot</h1>
+    <p class="subtitle">Submit a request and it'll show up as pending until it's approved.</p>
+
+    <div class="card">
+      <form id="request-form">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input id="name" name="name" required />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required />
+        </div>
+        <div class="field">
+          <label for="date">Date</label>
+          <input id="date" name="date" type="date" required />
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="startTime">Start time</label>
+            <input id="startTime" name="startTime" type="time" required />
+          </div>
+          <div class="field">
+            <label for="endTime">End time</label>
+            <input id="endTime" name="endTime" type="time" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="note">Note (optional)</label>
+          <textarea id="note" name="note" rows="3"></textarea>
+        </div>
+        <button type="submit">Send request</button>
+        <div id="form-msg" class="msg"></div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0;">Already booked on this date</h2>
+      <div id="busy-list" class="empty">Pick a date above to see booked times.</div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0;">Check your requests</h2>
+      <div class="field" style="max-width: 320px;">
+        <label for="lookup-email">Email</label>
+        <div style="display:flex; gap:0.5rem;">
+          <input id="lookup-email" type="email" placeholder="you@example.com" />
+          <button type="button" id="lookup-btn" class="ghost">Refresh</button>
+        </div>
+      </div>
+      <div id="my-requests"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

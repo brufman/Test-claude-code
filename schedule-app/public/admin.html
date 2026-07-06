@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Approve time slots</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <nav class="top"><a href="index.html">← Request a slot</a></nav>
+    <h1>Approve time slots</h1>
+    <p class="subtitle">Review incoming requests and approve or reject each one.</p>
+
+    <div class="card" id="key-card">
+      <div class="field" style="max-width: 320px;">
+        <label for="admin-key">Admin key</label>
+        <div style="display:flex; gap:0.5rem;">
+          <input id="admin-key" type="password" placeholder="Admin key" />
+          <button type="button" id="unlock-btn">Unlock</button>
+        </div>
+      </div>
+      <div id="key-msg" class="msg"></div>
+    </div>
+
+    <div class="card" id="requests-card" style="display:none;">
+      <h2 style="margin-top:0;">Requests</h2>
+      <div id="requests-list"></div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
