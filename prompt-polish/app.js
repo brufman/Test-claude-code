@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const TIME_PER_LEVEL = 45;
+  const TIME_PER_LEVEL = 30;
   const STORAGE_KEY = "promptPolishBestScore";
 
   const screens = {
@@ -21,6 +21,7 @@
     badPromptText: document.getElementById("bad-prompt-text"),
     beforeOutputText: document.getElementById("before-output-text"),
     livePromptText: document.getElementById("live-prompt-text"),
+    chipsLabel: document.getElementById("chips-label"),
     chipsGrid: document.getElementById("chips-grid"),
     resultStars: document.getElementById("result-stars"),
     resultScore: document.getElementById("result-score"),
@@ -37,6 +38,17 @@
   let timerHandle = null;
   let levelResults = [];
   let currentLevel = null;
+  let maxPicks = 0;
+  let chipOrder = [];
+
+  function shuffledIndices(n) {
+    const arr = Array.from({ length: n }, (_, i) => i);
+    for (let i = arr.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
 
   function showScreen(name) {
     Object.values(screens).forEach((s) => s.classList.remove("active"));
@@ -67,6 +79,8 @@
     currentLevel = LEVELS[i];
     selected = new Set();
     timeLeft = TIME_PER_LEVEL;
+    maxPicks = currentLevel.chips.filter((c) => c.correct).length;
+    chipOrder = shuffledIndices(currentLevel.chips.length);
 
     el.levelLabel.textContent = `Level ${i + 1} / ${LEVELS.length}`;
     el.progressFill.style.width = `${(i / LEVELS.length) * 100}%`;
@@ -75,6 +89,7 @@
     el.beforeOutputText.textContent = currentLevel.beforeOutput;
     el.timer.textContent = timeLeft;
     el.timer.classList.remove("low");
+    el.chipsLabel.textContent = `Pick exactly ${maxPicks} fixes that actually help:`;
 
     renderChips();
     updateLivePrompt();
@@ -83,7 +98,8 @@
 
   function renderChips() {
     el.chipsGrid.innerHTML = "";
-    currentLevel.chips.forEach((chip, idx) => {
+    chipOrder.forEach((idx) => {
+      const chip = currentLevel.chips[idx];
       const btn = document.createElement("button");
       btn.className = "chip";
       btn.type = "button";
@@ -98,6 +114,12 @@
       selected.delete(idx);
       btn.classList.remove("selected");
     } else {
+      if (selected.size >= maxPicks) {
+        btn.classList.remove("shake");
+        void btn.offsetWidth;
+        btn.classList.add("shake");
+        return;
+      }
       selected.add(idx);
       btn.classList.add("selected");
     }
@@ -118,7 +140,7 @@
     timerHandle = setInterval(() => {
       timeLeft -= 1;
       el.timer.textContent = Math.max(timeLeft, 0);
-      if (timeLeft <= 10) el.timer.classList.add("low");
+      if (timeLeft <= 8) el.timer.classList.add("low");
       if (timeLeft <= 0) {
         clearInterval(timerHandle);
         submitLevel();
