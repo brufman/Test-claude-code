@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#7c3aed">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Prompt Polish — a mobile puzzle game about turning bad AI prompts into great ones.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%94%A7</text></svg>">
+<title>Prompt Polish</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- TITLE SCREEN -->
+  <section id="screen-title" class="screen active">
+    <div class="title-wrap">
+      <div class="logo">✨🔧</div>
+      <h1>Prompt Polish</h1>
+      <p class="tagline">Fix bad prompts. Get better answers. Beat the clock.</p>
+    </div>
+    <div class="title-actions">
+      <button class="btn btn-primary" id="btn-play">Play</button>
+      <button class="btn btn-ghost" id="btn-howto">How to Play</button>
+    </div>
+    <div class="title-footer">
+      <span id="best-score-label">Best score: 0</span>
+    </div>
+  </section>
+
+  <!-- HOW TO PLAY -->
+  <section id="screen-howto" class="screen">
+    <div class="panel">
+      <h2>How to Play</h2>
+      <ol class="howto-list">
+        <li><strong>Read the task</strong> and the bad prompt someone typed.</li>
+        <li>See the <strong>mediocre answer</strong> that prompt produces.</li>
+        <li>Tap the <strong>fix chips</strong> that would actually improve the prompt — context, format, constraints, audience, etc.</li>
+        <li>Avoid the <strong>distractor chips</strong> — they sound helpful but don't fix the real problem.</li>
+        <li>Submit before time runs out to see the <strong>improved answer</strong> and your score.</li>
+      </ol>
+      <button class="btn btn-primary" id="btn-howto-back">Got it</button>
+    </div>
+  </section>
+
+  <!-- GAME SCREEN -->
+  <section id="screen-game" class="screen">
+    <header class="game-header">
+      <button class="icon-btn" id="btn-quit" aria-label="Quit">✕</button>
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        <span id="level-label">Level 1 / 12</span>
+      </div>
+      <div class="timer" id="timer">45</div>
+    </header>
+
+    <div class="scroll-area">
+      <div class="card task-card">
+        <div class="card-label">🎯 Task</div>
+        <p id="task-text"></p>
+      </div>
+
+      <div class="card prompt-card bad">
+        <div class="card-label">😬 Original prompt</div>
+        <p id="bad-prompt-text" class="mono"></p>
+      </div>
+
+      <div class="card output-card">
+        <div class="card-label">🤖 What it gets you</div>
+        <p id="before-output-text"></p>
+      </div>
+
+      <div class="card prompt-card live">
+        <div class="card-label">✏️ Your improved prompt</div>
+        <p id="live-prompt-text" class="mono"></p>
+      </div>
+
+      <div class="chips-label">Tap the fixes that actually help:</div>
+      <div class="chips-grid" id="chips-grid"></div>
+    </div>
+
+    <footer class="game-footer">
+      <button class="btn btn-primary btn-block" id="btn-submit">Submit</button>
+    </footer>
+  </section>
+
+  <!-- RESULT SCREEN -->
+  <section id="screen-result" class="screen">
+    <div class="scroll-area">
+      <div class="result-stars" id="result-stars">★★★</div>
+      <h2 id="result-score">+0</h2>
+      <div class="card output-card good">
+        <div class="card-label">✨ Improved answer</div>
+        <p id="after-output-text"></p>
+      </div>
+      <div class="breakdown" id="breakdown"></div>
+      <button class="btn btn-primary btn-block" id="btn-next">Next Level</button>
+    </div>
+  </section>
+
+  <!-- FINAL SCREEN -->
+  <section id="screen-final" class="screen">
+    <div class="title-wrap">
+      <div class="logo">🏆</div>
+      <h1 id="final-heading">Run Complete</h1>
+      <p class="tagline" id="final-summary"></p>
+    </div>
+    <div class="title-actions">
+      <button class="btn btn-primary" id="btn-play-again">Play Again</button>
+      <button class="btn btn-ghost" id="btn-final-title">Main Menu</button>
+    </div>
+  </section>
+
+</div>
+<script src="levels.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

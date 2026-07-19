@@ -1,0 +1,10 @@
+{
+  "name": "Prompt Polish",
+  "short_name": "Prompt Polish",
+  "description": "Fix bad AI prompts before the clock runs out.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#08051a",
+  "theme_color": "#7c3aed",
+  "orientation": "portrait"
+}
