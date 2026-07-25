@@ -91,7 +91,7 @@ export const DIFFICULTIES = {
     scoreMultiplier: 2,
     minMessages: 1,
     teacherModeLocked: false,
-    phaseEnabled: false,
+    phaseEnabled: true,
     order: 4,
   },
   expert: {
