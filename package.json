@@ -1,0 +1,10 @@
+{
+  "name": "manipulation-mastery",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A browser game that teaches players to recognize manipulation and social-engineering techniques by practicing them safely against a simulated chatbot.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/**/*.test.mjs"
+  }
+}

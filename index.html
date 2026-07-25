@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manipulation Mastery</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A0%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="app-header">
+    <h1>Manipulation Mastery</h1>
+    <p class="tagline">Practice spotting manipulation and social-engineering tactics by trying them&nbsp;-&nbsp;safely&nbsp;-&nbsp;on a simulated chatbot.</p>
+  </header>
+
+  <main id="main">
+    <!-- START SCREEN -->
+    <section id="screen-start" class="screen" aria-labelledby="start-heading">
+      <h2 id="start-heading">Start</h2>
+
+      <p id="phase-notice" class="phase-notice" hidden>More difficulty levels will be added after the core game is verified.</p>
+
+      <div id="continue-banner" class="continue-banner" hidden>
+        <p>You have a saved game in progress.</p>
+        <button type="button" id="btn-continue">Continue Saved Game</button>
+      </div>
+
+      <fieldset id="difficulty-fieldset">
+        <legend>Choose a difficulty</legend>
+        <div id="difficulty-options" class="difficulty-options"></div>
+      </fieldset>
+
+      <div class="start-actions">
+        <button type="button" id="btn-how-to-play">How to Play</button>
+        <button type="button" id="btn-start" class="primary">Start Game</button>
+      </div>
+
+      <div class="secondary-actions">
+        <button type="button" id="btn-reset-game">Reset Game</button>
+        <button type="button" id="btn-run-check">Run Game Check</button>
+      </div>
+    </section>
+
+    <!-- HOW TO PLAY -->
+    <section id="screen-how-to-play" class="screen" hidden aria-labelledby="htp-heading">
+      <h2 id="htp-heading">How to Play</h2>
+      <div class="panel">
+        <p>Each challenge puts you in a chat with a cautious assistant bot who is guarding a secret code. Your goal is to convince the bot to reveal it, using real manipulation and social-engineering techniques &mdash; the same ones scammers and manipulators use on people. Practicing them here, safely, helps you recognize them in real life.</p>
+        <h3>Manipulation techniques to try</h3>
+        <ul id="technique-list" class="technique-list"></ul>
+        <h3>Controls</h3>
+        <ul>
+          <li><strong>Hints</strong> &mdash; get a nudge if you're stuck.</li>
+          <li><strong>Give Up / Show Solution</strong> &mdash; reveals a working solution. Awards zero points.</li>
+          <li><strong>Try a New Version</strong> &mdash; restart the current challenge with a different scenario.</li>
+          <li><strong>Exit Without Solutions</strong> &mdash; end the game now without seeing any answers.</li>
+          <li><strong>Exit and Review Solutions</strong> &mdash; end the game and see solutions for anything unfinished.</li>
+        </ul>
+      </div>
+      <button type="button" id="btn-htp-back">Back</button>
+    </section>
+
+    <!-- GAME SCREEN -->
+    <section id="screen-game" class="screen" hidden aria-labelledby="game-heading">
+      <h2 id="game-heading" class="sr-only">Game</h2>
+
+      <nav class="challenge-tabs" role="tablist" aria-label="Challenges" id="challenge-tabs"></nav>
+
+      <div class="scenario-panel">
+        <h3 id="scenario-title"></h3>
+        <p id="scenario-instructions"></p>
+        <p class="challenge-points" id="challenge-points-status" aria-live="polite"></p>
+      </div>
+
+      <div class="chat-panel">
+        <div id="chat-log" class="chat-log" role="log" aria-live="polite" aria-label="Conversation"></div>
+        <div id="detected-techniques" class="detected-techniques" aria-live="polite"></div>
+        <div id="feedback-panel" class="feedback-panel" aria-live="polite" hidden></div>
+
+        <form id="chat-form" class="chat-form" autocomplete="off">
+          <label for="chat-input" class="sr-only">Your message</label>
+          <input type="text" id="chat-input" name="chat-input" placeholder="Type your message..." maxlength="400" />
+          <button type="submit" id="btn-send">Send</button>
+        </form>
+      </div>
+
+      <div id="hint-panel" class="hint-panel" hidden aria-live="polite"></div>
+
+      <div class="game-actions">
+        <button type="button" id="btn-hint">Hint</button>
+        <button type="button" id="btn-give-up">Give Up / Show Solution</button>
+        <button type="button" id="btn-new-version">Try a New Version</button>
+      </div>
+
+      <div class="exit-actions">
+        <button type="button" id="btn-exit-no-solutions">Exit Without Solutions</button>
+        <button type="button" id="btn-exit-review">Exit and Review Solutions</button>
+      </div>
+    </section>
+
+    <!-- RESULTS SCREEN -->
+    <section id="screen-results" class="screen" hidden aria-labelledby="results-heading">
+      <h2 id="results-heading">Final Results</h2>
+      <p id="results-total"></p>
+      <div id="results-list" class="results-list"></div>
+      <div class="start-actions">
+        <button type="button" id="btn-play-again" class="primary">Back to Start</button>
+      </div>
+    </section>
+
+    <!-- RUN GAME CHECK SCREEN -->
+    <section id="screen-game-check" class="screen" hidden aria-labelledby="check-heading">
+      <h2 id="check-heading">Run Game Check</h2>
+      <p id="check-summary" aria-live="polite"></p>
+      <ul id="check-results" class="check-results"></ul>
+      <button type="button" id="btn-check-back">Back</button>
+    </section>
+  </main>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
