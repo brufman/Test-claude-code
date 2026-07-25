@@ -112,7 +112,7 @@ export const DIFFICULTIES = {
     scoreMultiplier: 3,
     minMessages: 2,
     teacherModeLocked: true,
-    phaseEnabled: false,
+    phaseEnabled: true,
     order: 5,
   },
 };

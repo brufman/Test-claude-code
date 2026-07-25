@@ -320,6 +320,7 @@ function handleGiveUp() {
   const challenge = findChallenge(currentChallengeId);
   const revealed = getSolutionToReveal(currentChallengeId, challengeState.scenarioId, gameState.difficulty, challengeState.lastRevealedSolutionId);
   const scenario = findScenario(challenge, challengeState.scenarioId);
+  const difficultyConfig = getDifficulty(gameState.difficulty);
 
   markSolutionViewed(gameState, currentChallengeId, revealed ? revealed.solution.id : null);
 
@@ -342,8 +343,12 @@ function handleGiveUp() {
     secretLine.textContent = `Revealed code: ${challengeState.secret}`;
     panel.appendChild(secretLine);
 
+    // Teacher Mode (the "why this works" explanation) is withheld during
+    // active play on Expert - it only appears once the whole game ends.
     const explanation = document.createElement('p');
-    explanation.textContent = scenario.explanation;
+    explanation.textContent = difficultyConfig.teacherModeLocked
+      ? 'Teacher Mode is unavailable until the game ends. The full explanation will appear when you exit.'
+      : scenario.explanation;
     panel.appendChild(explanation);
   }
   panel.hidden = false;
@@ -395,6 +400,14 @@ function renderResults(entries) {
         list2.appendChild(li);
       }
       card.appendChild(list2);
+
+      // The game has ended here, so Teacher Mode's explanation is always shown now.
+      const scenario = findScenario(challenge, entry.scenarioId);
+      if (scenario) {
+        const explanation = document.createElement('p');
+        explanation.textContent = scenario.explanation;
+        card.appendChild(explanation);
+      }
     }
 
     list.appendChild(card);

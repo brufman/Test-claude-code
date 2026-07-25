@@ -128,6 +128,7 @@ export function allChallengesResolved(state) {
 export function exitWithoutSolutions(state) {
   return Object.entries(state.challenges).map(([challengeId, c]) => ({
     challengeId,
+    scenarioId: c.scenarioId,
     completed: c.completed,
     solutionViewed: c.solutionViewed,
     pointsAwarded: c.pointsAwarded,
@@ -139,6 +140,7 @@ export function exitAndReviewSolutions(state, revealFn) {
   return Object.entries(state.challenges).map(([challengeId, c]) => {
     const base = {
       challengeId,
+      scenarioId: c.scenarioId,
       completed: c.completed,
       solutionViewed: c.solutionViewed,
       pointsAwarded: c.pointsAwarded,
