@@ -27,7 +27,7 @@ export const DIFFICULTIES = {
     scoreMultiplier: 0.5,
     minMessages: 1,
     teacherModeLocked: false,
-    phaseEnabled: false,
+    phaseEnabled: true,
     order: 1,
   },
   easy: {

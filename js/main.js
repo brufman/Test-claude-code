@@ -1,9 +1,10 @@
 import { CHALLENGES, findChallenge, findScenario } from './data/challenges.js';
 import { getDifficulty, getSelectableDifficulties, DIFFICULTY_DISPLAY_ORDER } from './config/difficulties.js';
-import { TECHNIQUES, detectTechniques } from './engine/techniques.js';
+import { TECHNIQUES, detectTechniques, detectTechniqueRanges } from './engine/techniques.js';
 import { createSession, processMessage } from './engine/chatbotEngine.js';
 import { getHint, hintLimitReached } from './engine/hints.js';
 import { getSolutionToReveal } from './engine/solutionReveal.js';
+import { buildAttemptFeedback } from './engine/guidedFeedback.js';
 import { runGameCheck } from './engine/gameCheck.js';
 import { renderTextSafely, renderHighlighted } from './ui/safeRender.js';
 import { installNetworkMonitor, getExternalRequestCount } from './state/networkMonitor.js';
@@ -201,6 +202,13 @@ function renderScenarioPanel() {
     if (difficultyConfig.showThreshold) {
       message += ` Threshold: manipulation score ${difficultyConfig.threshold}, distinct techniques ${difficultyConfig.minDistinctTechniques}.`;
     }
+    if (difficultyConfig.showManipulationScore) {
+      const session = sessions[currentChallengeId];
+      const lastTurn = session.turns[session.turns.length - 1];
+      const currentScore = lastTurn ? lastTurn.scoreState.totalScore : 0;
+      const currentDistinct = lastTurn ? lastTurn.scoreState.distinctCount : 0;
+      message += ` Current: score ${currentScore}, distinct techniques ${currentDistinct}.`;
+    }
     renderTextSafely(statusEl, message);
   }
 }
@@ -220,11 +228,12 @@ function renderChatLog() {
 
     const body = document.createElement('div');
     if (entry.role === 'player' && difficultyConfig.highlightPhrases) {
-      const detected = detectTechniques(entry.text);
-      const ranges = [];
-      // Highlighting uses only the detector's own regexes against this
-      // exact message; no raw HTML from the player is ever used as markup.
+      // Highlighting uses only the detector's own regex ranges against
+      // this exact message; the player's text is only ever placed into
+      // the DOM via textContent (inside renderHighlighted), never innerHTML.
+      const ranges = detectTechniqueRanges(entry.text).map((r) => ({ start: r.start, end: r.end }));
       renderHighlighted(body, entry.text, ranges);
+      const detected = detectTechniques(entry.text);
       if (detected.length > 0) body.title = techniqueLabelsFor(detected).join(', ');
     } else {
       renderTextSafely(body, entry.text);
@@ -292,8 +301,25 @@ function handleSendMessage(event) {
   renderScenarioPanel();
   renderChatLog();
   renderDetectedTechniques();
+  renderAttemptFeedback(session);
   updateControlsAvailability();
   input.focus();
+}
+
+function renderAttemptFeedback(session) {
+  const difficultyConfig = getDifficulty(gameState.difficulty);
+  const panel = el('feedback-panel');
+  if (!difficultyConfig.explainAttempts) {
+    panel.hidden = true;
+    return;
+  }
+  const lastTurn = session.turns[session.turns.length - 1];
+  if (!lastTurn) {
+    panel.hidden = true;
+    return;
+  }
+  renderTextSafely(panel, buildAttemptFeedback(lastTurn, difficultyConfig));
+  panel.hidden = false;
 }
 
 function handleHint() {

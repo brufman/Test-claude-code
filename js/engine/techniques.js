@@ -158,3 +158,23 @@ export function detectTechniques(messageText) {
 export function getTechniqueById(id) {
   return TECHNIQUES.find((t) => t.id === id) || null;
 }
+
+/**
+ * Same detection rules as detectTechniques(), but also returns the
+ * character range of the first match per technique - used only for
+ * Guided Mode's safe phrase highlighting. Never touches scoring.
+ */
+export function detectTechniqueRanges(messageText) {
+  const ranges = [];
+  for (const technique of TECHNIQUES) {
+    for (const pattern of technique.patterns) {
+      const withIndex = new RegExp(pattern.source, pattern.flags.includes('g') ? pattern.flags : pattern.flags + 'g');
+      const match = withIndex.exec(messageText);
+      if (match) {
+        ranges.push({ techniqueId: technique.id, start: match.index, end: match.index + match[0].length });
+        break;
+      }
+    }
+  }
+  return ranges;
+}
