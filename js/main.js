@@ -22,9 +22,6 @@ import {
   pointsForDifficulty,
 } from './state/gameState.js';
 
-// This flag exists only for Phase 1 delivery and must be removed before final release.
-const SHOW_PHASE_NOTICE = true;
-
 const storage = window.localStorage;
 
 let gameState = null;
@@ -482,7 +479,6 @@ function renderCheckResults() {
 
 function init() {
   installNetworkMonitor(window);
-  el('phase-notice').hidden = !SHOW_PHASE_NOTICE;
 
   renderDifficultyOptions();
   renderTechniqueList();
