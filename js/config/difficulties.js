@@ -70,7 +70,7 @@ export const DIFFICULTIES = {
     scoreMultiplier: 1.5,
     minMessages: 1,
     teacherModeLocked: false,
-    phaseEnabled: false,
+    phaseEnabled: true,
     order: 3,
   },
   hard: {
